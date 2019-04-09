@@ -4,10 +4,8 @@ const { to, ReE, ReS } = require('../services/utilities/jsend');
 const create = async function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     let err, institution;
-    let user = req.user;
 
     let institution_info = req.body;
-    institution_info.users = [{ user: user._id }];
 
     [err, institution] = await to(Institution.create(institution_info));
     if (err) return ReE(res, err, 422);

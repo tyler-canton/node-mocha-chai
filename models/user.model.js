@@ -35,9 +35,7 @@ let UserSchema = mongoose.Schema({
         })]
     },
     password: { type: String },
-},
-    { toJSON: { timestamps: true } }
-);
+}, { timestamps: { createdAt: 'created_at' } });
 
 
 UserSchema.pre('save', async function (next) {
@@ -76,18 +74,6 @@ UserSchema.methods.Institutions = async function () {
     if (err) TE('err getting institutions');
     return institutions;
 };
-
-UserSchema.virtual('full_name').set(function (name) {
-    var split = name.split(' ');
-    this.first = split[0];
-    this.last = split[1];
-});
-
-UserSchema.virtual('full_name').get(function () { //now you can treat as if this was a property instead of a function
-    if (!this.first) return null;
-    if (!this.last) return this.first;
-    return this.first + ' ' + this.last;
-});
 
 UserSchema.methods.getJWT = function () {
     let expiration_time = parseInt(CONFIG.jwt_expiration);

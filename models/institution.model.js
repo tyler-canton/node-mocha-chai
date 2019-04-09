@@ -26,6 +26,11 @@ InstitutionSchema.virtual('books', {
     foreignField: 'instId',
     justOne: false // set true for one-to-one relationship
 });
+<<<<<<< HEAD
+=======
+InstitutionSchema.set('toObject', { virtuals: true });
+InstitutionSchema.set('toJSON', { virtuals: true });
+>>>>>>> Init application with auth/jwt/test
 
 InstitutionSchema.methods.toWeb = function () {
     let json = this.toJSON();

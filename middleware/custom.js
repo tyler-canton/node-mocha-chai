@@ -18,4 +18,25 @@ let institution = async function (req, res, next) {
     req.institution = institution;
     next();
 }
+<<<<<<< HEAD
+=======
+module.exports.institution = institution;
+
+let userInstitutionBooks = async function (req, res, next) {
+    let err, institution;
+    const {user} = req
+    [err, institution] = await to(Institution.find({ _id: institution_id }));
+    if (err) return ReE(res, "err finding institution");
+
+    if (!institution) return ReE(res, "Institution not found with id: " + institution_id);
+     user, users_array;
+    user = req.user;
+    users_array = institution.users.map(obj => String(obj.user));
+
+    if (!users_array.includes(String(user._id))) return ReE(res, "User does not have permission to read app with id: " + app_id);
+
+    req.institution = institution;
+    next();
+}
+>>>>>>> Init application with auth/jwt/test
 module.exports.institution = institution;

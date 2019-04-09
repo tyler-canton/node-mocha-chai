@@ -1,38 +1,32 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
-const validate = require('mongoose-validator');
-
 let BookSchema = mongoose.Schema({
     instId: {
         type: Schema.Types.ObjectId,
         required: true
     },
-    name: { type: String },
-    role: { enum: ['student', 'academic', 'administrator'], },
-    phone: {
-        type: String, lowercase: true, trim: true, index: true, unique: true, sparse: true,//sparse is because now we have two possible unique keys that are optional
-        validate: [validate({
-            validator: 'isNumeric',
-            arguments: [7, 20],
-            message: 'Not a valid phone number.',
-        })]
+    isbn: {
+        type: String,
+        required: true
     },
-    email: {
-        type: String, lowercase: true, trim: true, index: true, unique: true, sparse: true,
-        validate: [validate({
-            validator: 'isEmail',
-            message: 'Not a valid email.',
-        }),]
+    title: {
+        type: String,
+        required: true
     },
-    password: { type: String },
-}, { toJSON: { timestamps: true } });
+    author: { type: String },
 
-BookSchema.methods.Institutions = async function () {
+}, { timestamps: { createdAt: 'created_at' } });
+
+BookSchema.set('toObject', { virtuals: true });
+BookSchema.set('toJSON', { virtuals: true });
+
+BookSchema.methods.UserInstitutionBooks = async function () {
     let err, institutions;
-    [err, institutions] = await to(Institution.find({ 'book': this._id }));
+    [err, institutions] = await to(Institution.find({ 'user': this._id }).populate('books'));
     if (err) TE('err getting institutions');
+    console.log(`Booking and Gooking baby ${institutions}`);
+    
     return institutions;
 };
-
 module.exports = mongoose.model('Book', BookSchema);

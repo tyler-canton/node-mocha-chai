@@ -28,11 +28,19 @@ const createUser = async function (userInfo) {
     if (!unique_key) TE('An email or phone number was not entered.');
 
     if (validator.isEmail(unique_key)) {
+<<<<<<< HEAD
 
         let domain_name = unique_key.split('@').pop();
         [err, institutions] = await to(Institution.find({ 'domain': domain_name }));
         if (institutions.length === 0) TE('User not affiliated with institutions', true);
 
+=======
+        // Get unique_key to find Institution and populate instId into the User
+        let domain_name = unique_key.split('@').pop();
+        [err, institutions] = await to(Institution.find({ 'domain': domain_name }));
+        if (institutions.length === 0) TE('User not affiliated with institutions', true);
+        userInfo.instId = institutions._id
+>>>>>>> Init application with auth/jwt/test
         auth_info.method = 'email';
         userInfo.email = unique_key;
 
@@ -85,3 +93,17 @@ const authUser = async function (userInfo) {//returns token
 
 }
 module.exports.authUser = authUser;
+
+const authBook = async function (bookInfo) {
+    let book;
+    const { isbn, title, author } = bookInfo;
+    if (validator.isISBN(isbn)) {
+        [err, book] = await to(Book.findOne({ isbn: isbn }));
+        if (err) TE('Book already saved for this institution', true);
+        [err, book] = await to(Book.create(book_info));
+        if (err) return ReE(res, err, 422);
+    }
+    return book;
+}
+module.exports.authBook = authBook;
+

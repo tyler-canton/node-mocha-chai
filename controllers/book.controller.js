@@ -1,15 +1,14 @@
-const { Institution } = require('../models');
+const { Institution, Book } = require('../models');
+const { authService } = require('../services/auth.service');
+
 const { to, ReE, ReS } = require('../services/utilities/jsend');
 
 const create = async function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     let err, book;
-    let user = req.user;
-
     let book_info = req.body;
-    book_info.users = [{ user: user._id }];
-
-    [err, book] = await to(Institution.create(book_info));
+    // Validate and create book
+    [err, book] = await to(authService.authBook(book_info));
     if (err) return ReE(res, err, 422);
 
     return ReS(res, { book: book.toWeb() }, 201);
@@ -18,9 +17,10 @@ module.exports.create = create;
 
 const getAll = async function (req, res) {
     res.setHeader('Content-Type', 'application/json');
-    let user = req.user;
-    let err, books;
-    [err, books] = await to(user.Books());
+    let err, books, user = req.user;
+
+    [err, books] = await to(Book.UserInstitutionBooks(user));
+    if (err) return ReE(res, err, 422);
 
     let books_json = []
     for (let i in books) {

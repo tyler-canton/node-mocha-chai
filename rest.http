@@ -4,7 +4,7 @@ POST http://localhost:3000/routev1/users HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "carterCarter@variableassign.com",
+    "email": "rawa@variableassign.com",
     "password": "asdf"
 }
 
@@ -28,3 +28,26 @@ Authorization: {{token}}
     "email": "carterCarter@variableassign.com",
     "password": "asdf"
 }
+
+###
+# USER ACCESS AUTH BOOK ROUTE
+
+GET http://localhost:3000/routev1/books HTTP/1.1
+Content-Type: application/json
+Authorization: {{token}}
+
+###
+# SEED DATA
+
+POST http://localhost:3000/routev1/users/seed HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Radleaf Technology",
+    "email": "mariam@variableassign.com",
+    "domain": "variableassign.pox",
+    "isbn": "978-93-92293-01-7",
+    "title":"variable Title",
+    "author": "Tyler Canton"
+}
+

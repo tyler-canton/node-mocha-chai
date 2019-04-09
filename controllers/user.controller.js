@@ -1,5 +1,5 @@
-const { User } = require('../models');
-const authService = require('../services/auth.service');
+const { Book, Institution } = require('../models');
+const { authService } = require('../services/auth.service');
 const { to, ReE, ReS } = require('../services/utilities/jsend');
 
 const create = async function (req, res) {
@@ -80,3 +80,30 @@ const signin = async function (req, res) {
     return ReS(res, { token: user.getJWT(), user: user.toWeb() });
 }
 module.exports.signin = signin;
+
+const seed = async function (req, res) {
+    const { name, email, domain, isbn, title, author } = req.body;
+
+    [err, institution] = await to(Institution.create({
+        name: name,
+        email: email,
+        domain: domain
+    }));
+    if (err) return ReE(res, err, 422);
+
+    [err, institutionBooks] = await to(Book.create({
+        instId: institution._id,
+        isbn: isbn,
+        title: title,
+        author: author
+    }));
+    if (err) return ReE(res, err, 422);
+
+    [err, output] = await to(Institution.find({}).populate({
+        path: 'users'
+    }));
+    if (err) return ReE(res, err, 422);
+
+    return ReS(res, { institution: output });
+}
+module.exports.seed = seed; 
