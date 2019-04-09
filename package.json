@@ -1,0 +1,47 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "./node_modules/.bin/mocha --require @babel/register --require @babel/polyfill ./test/*.js  --exit"
+  },
+  "dependencies": {
+ 
+    "@types/chai-http": "4.2.0",
+    "@types/express": "4.16.1",
+    "await-to-js": "^2.0.1",
+    "bcrypt": "^1.0.3",
+    "bcrypt-promise": "^2.0.0",
+    "body-parser": "~1.18.2",
+    "chai-http": "4.2.1",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
+    "debug": "~2.6.9",
+    "dotenv": "^4.0.0",
+    "express": "~4.15.5",
+    "jade": "~1.11.0",
+    "mongoose": "^5.0.1",
+    "mongoose-validator": "^2.0.2",
+    "morgan": "~1.9.0",
+    "parse-error": "^0.2.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.0",
+    "serve-favicon": "~2.4.5",
+    "validator": "^9.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.4.3",
+    "@babel/core": "7.4.3",
+    "@babel/node": "7.2.2",
+    "@babel/polyfill": "7.4.3",
+    "@babel/plugin-proposal-class-properties": "7.4.0",
+    "@babel/plugin-transform-regenerator": "7.4.3",
+    "@babel/preset-env": "7.4.3",
+    "@babel/register": "7.4.0",
+    "babel-preset-env": "1.7.0",
+    "chai": "4.2.0",
+    "mocha": "6.0.2",
+    "nodemon": "1.18.10"
+  }
+}
