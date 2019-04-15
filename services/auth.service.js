@@ -28,19 +28,11 @@ const createUser = async function (userInfo) {
     if (!unique_key) TE('An email or phone number was not entered.');
 
     if (validator.isEmail(unique_key)) {
-<<<<<<< HEAD
-
-        let domain_name = unique_key.split('@').pop();
-        [err, institutions] = await to(Institution.find({ 'domain': domain_name }));
-        if (institutions.length === 0) TE('User not affiliated with institutions', true);
-
-=======
         // Get unique_key to find Institution and populate instId into the User
         let domain_name = unique_key.split('@').pop();
         [err, institutions] = await to(Institution.find({ 'domain': domain_name }));
         if (institutions.length === 0) TE('User not affiliated with institutions', true);
         userInfo.instId = institutions._id
->>>>>>> Init application with auth/jwt/test
         auth_info.method = 'email';
         userInfo.email = unique_key;
 

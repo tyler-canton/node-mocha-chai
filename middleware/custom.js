@@ -18,8 +18,6 @@ let institution = async function (req, res, next) {
     req.institution = institution;
     next();
 }
-<<<<<<< HEAD
-=======
 module.exports.institution = institution;
 
 let userInstitutionBooks = async function (req, res, next) {
@@ -38,5 +36,4 @@ let userInstitutionBooks = async function (req, res, next) {
     req.institution = institution;
     next();
 }
->>>>>>> Init application with auth/jwt/test
 module.exports.institution = institution;

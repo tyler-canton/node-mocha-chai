@@ -100,7 +100,10 @@ const seed = async function (req, res) {
     if (err) return ReE(res, err, 422);
 
     [err, output] = await to(Institution.find({}).populate({
-        path: 'users'
+        path: 'users',
+        populate: {
+            path:'books'
+        }
     }));
     if (err) return ReE(res, err, 422);
 
